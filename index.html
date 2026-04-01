@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 위너스 | AI 수익화 마스터 클래스 — 김포 오프라인 강의</title>
-<meta name="description" content="코딩 없이 Gemini로 숏폼·롱폼 콘텐츠를 만들고 유튜브·인스타·어필리에이트로 실제 수익을 내는 오프라인 강의. 기초반 39만원부터 시작.">
+<meta name="description" content="코딩 없이 Gemini로 숏폼·롱폼 콘텐츠를 만들고 유튜브·인스타·어필리에이트로 실제 수익을 내는 오프라인 강의. 초보반 39만원부터 시작.">
 <meta name="keywords" content="AI 수익화, AI 강의, 유튜브 수익화, 인스타그램 수익화, 어필리에이트, 김포 강의, 오프라인 AI 강의, Gemini 강의">
 <meta property="og:title" content="AI 위너스 | AI 수익화 마스터 클래스">
-<meta property="og:description" content="코딩 없이 AI로 콘텐츠 만들고 수익 내는 법. 기초반 39만원부터.">
+<meta property="og:description" content="코딩 없이 AI로 콘텐츠 만들고 수익 내는 법. 초보반 39만원부터.">
 <meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -25,7 +25,7 @@
 
   /* HERO */
   .hero {
-    min-height: 100vh;
+    min-height: min(100vh, 800px);
     display: flex; flex-direction: column; justify-content: center; align-items: center;
     text-align: center; padding: 80px 24px 60px; position: relative;
     background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,184,75,0.12) 0%, transparent 70%);
@@ -48,7 +48,7 @@
   .chip { background: var(--gray); border: 1px solid var(--border); border-radius: 100px; padding: 10px 20px; font-size: 14px; color: var(--gold-light); font-weight: 500; }
 
   /* SECTION */
-  .section { padding: 80px 24px; max-width: 960px; margin: 0 auto; }
+  .section { padding: 72px 24px; max-width: 960px; margin: 0 auto; }
   .section-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; font-weight: 500; }
   .section-title { font-size: clamp(24px, 4vw, 40px); font-weight: 800; letter-spacing: -1px; margin-bottom: 48px; line-height: 1.2; }
 
@@ -96,7 +96,7 @@
   .session-time strong { color: var(--gold-light); }
   .session-toggle { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gold); transition: transform 0.3s; flex-shrink: 0; }
   .session-item.open .session-toggle { transform: rotate(180deg); }
-  .session-body { display: none; padding: 4px 20px 20px 92px; }
+  .session-body { display: none; padding: 4px 20px 20px 72px; }
   .session-item.open .session-body { display: block; }
 
   .time-block { margin-bottom: 16px; }
@@ -122,7 +122,7 @@
 
   /* ===== TRUST SECTION ===== */
   .trust-section {
-    padding: 80px 24px;
+    padding: 72px 24px;
     background: #0a0a0a;
     position: relative;
     overflow: hidden;
@@ -244,9 +244,132 @@
   .trust-bottom-text strong { color: var(--gold-light); }
   @media (max-width: 560px) { .trust-stat { padding: 28px 16px; } }
 
+
+  /* ===== LICENSE SECTION ===== */
+  .license-section {
+    padding: 0 24px 72px;
+    position: relative;
+  }
+  .license-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .license-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a0800 0%, #120f00 50%, #0a0800 100%);
+    border: 1px solid rgba(232,184,75,0.4);
+    padding: 52px 48px;
+  }
+  .license-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #e8b84b, #f5d07a, #ff9500, #f5d07a, #e8b84b);
+    background-size: 200% 100%;
+    animation: lic-shimmer 4s linear infinite;
+  }
+  @keyframes lic-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  .license-card::after {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(232,184,75,0.08), transparent 65%);
+    pointer-events: none;
+  }
+  .license-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+  .license-icon-wrap {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, #2a1e00, #3d2c00);
+    border: 2px solid rgba(232,184,75,0.5);
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+    flex-shrink: 0;
+  }
+  .license-text { flex: 1; min-width: 240px; }
+  .license-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(232,184,75,0.12);
+    border: 1px solid rgba(232,184,75,0.3);
+    color: var(--gold);
+    font-size: 12px; font-weight: 800; letter-spacing: 2px;
+    padding: 5px 16px; border-radius: 100px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .license-headline {
+    font-size: clamp(20px, 3.5vw, 32px);
+    font-weight: 900;
+    line-height: 1.35;
+    letter-spacing: -1px;
+    margin-bottom: 0;
+  }
+  .license-headline em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .license-headline .hl-red {
+    color: #ff6b35;
+  }
+  .license-divider {
+    height: 1px;
+    background: rgba(232,184,75,0.15);
+    margin: 32px 0;
+  }
+  .license-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .license-facts {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .license-fact {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: #999;
+  }
+  .license-fact-icon {
+    width: 36px; height: 36px;
+    background: rgba(232,184,75,0.08);
+    border: 1px solid rgba(232,184,75,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+  }
+  .license-fact strong { color: #ddd; display: block; font-size: 13px; }
+  .license-cta-text {
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .license-cta-text span { color: var(--white); }
+  @media (max-width: 600px) {
+    .license-card { padding: 36px 24px; }
+    .license-cta-text { text-align: left; white-space: normal; }
+  }
+
   /* ===== HOOK SECTION ===== */
   .hook-section {
-    padding: 120px 24px 100px;
+    padding: 96px 24px 80px;
     position: relative;
     overflow: hidden;
     background: #080808;
@@ -495,7 +618,7 @@
     font-size: 14px; font-weight: 700; color: var(--gold);
     margin-bottom: 24px; letter-spacing: 0.5px;
   }
-  .value-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+  .value-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
   .value-item {
     background: rgba(232,184,75,0.06); border: 1px solid rgba(232,184,75,0.15);
     border-radius: 14px; padding: 20px; text-align: center;
@@ -606,6 +729,9 @@
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 40px 36px;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .form-group { margin-bottom: 24px; }
@@ -639,8 +765,9 @@
   .form-check {
     display: flex; align-items: center; gap: 12px;
     background: #141414; border: 1px solid rgba(232,184,75,0.15);
-    border-radius: 10px; padding: 13px 16px; cursor: pointer;
+    border-radius: 10px; padding: 14px 16px; cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
+    min-height: 56px;
   }
   .form-check:hover { border-color: rgba(232,184,75,0.4); background: #181400; }
   .form-check input[type="radio"] { display: none; }
@@ -654,7 +781,7 @@
   .form-check.selected .check-dot { border-color: var(--gold); background: var(--gold); }
   .form-check.selected .check-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #000; display: block; }
   .check-text { font-size: 15px; flex: 1; }
-  .check-schedule { font-size: 13px; color: var(--gold); margin-top: 5px; font-weight: 600; }
+  .check-schedule { font-size: 12px; color: var(--gold); margin-top: 4px; font-weight: 600; line-height: 1.5; }
   .check-price { font-size: 15px; font-weight: 800; color: var(--gold); white-space: nowrap; }
 
   .form-divider { height: 1px; background: var(--border); margin: 32px 0; }
@@ -800,7 +927,7 @@
   }
   /* ===== WEEKEND SPECIAL ===== */
   .weekend-section {
-    padding: 0 24px 80px;
+    padding: 0 24px 72px;
   }
   .weekend-wrap {
     max-width: 960px;
@@ -964,8 +1091,66 @@
   @media (max-width: 600px) { .session-body { padding-left: 20px; } }
 
   /* ===== 모바일 추가 대응 ===== */
-  @media (max-width: 480px) {
+      @media (max-width: 480px) {
+    /* 히어로 */
+    .hero { padding: 60px 20px 40px; }
+    .hero-chips { gap: 8px; }
+    .chip { padding: 7px 14px; font-size: 12px; }
 
+    /* 신뢰 섹션 */
+    .trust-cards { grid-template-columns: 1fr; }
+    .trust-stat-num { font-size: 40px; }
+
+    /* 후킹 섹션 */
+    .hook-section { padding: 80px 20px 60px; }
+    .hook-compare-wrap { overflow: hidden; }
+
+    /* 과정 카드 */
+    .classes-grid { grid-template-columns: 1fr; }
+
+    /* 커리큘럼 */
+    .block-name { font-size: 20px; }
+    .session-title { font-size: 15px; }
+    .session-num-big { font-size: 22px; }
+    .session-header { padding: 14px 16px; gap: 10px; }
+
+    /* 가격표 */
+    .price-grid { grid-template-columns: 1fr; }
+    .value-items { grid-template-columns: 1fr 1fr; }
+    .package-top { flex-direction: column; }
+    .package-right { text-align: left; }
+
+    /* 특강 박스 */
+    .special-lecture-box { flex-direction: column; }
+    .slb-right { width: 100%; }
+
+    /* 주말특강 */
+    .weekend-card { padding: 28px 20px; }
+    .weekend-bottom { flex-direction: column; align-items: flex-start; }
+    .weekend-cta { width: 100%; justify-content: center; }
+
+    /* 폼 */
+    .form-card { padding: 24px 20px; }
+    .form-submit { font-size: 15px; padding: 16px; }
+    .check-price { font-size: 13px; }
+
+    /* 비교표 */
+    .hook-compare { grid-template-columns: 1fr; border-radius: 16px; }
+    .hook-compare-vs { height: 36px; writing-mode: horizontal-tb !important; }
+    .hook-compare-item.bad { border-radius: 16px 16px 0 0; }
+    .hook-compare-item.good { border-radius: 0 0 16px 16px; }
+
+    /* 최상급반 */
+    .slb-compare { padding: 20px; }
+
+    /* 푸터 */
+    .footer-biz-row { flex-direction: column; gap: 2px; }
+    .footer-biz-label { min-width: unset; color: var(--gold); font-size: 12px; }
+
+    /* 카카오 버튼 */
+    .kakao-float { bottom: 16px; right: 16px; padding: 12px; }
+  .kakao-float span { display: none; }
+  .kakao-float { padding: 14px; border-radius: 50%; }
     /* 히어로 */
     .hero { padding: 60px 20px 40px; }
     .hero-chips { gap: 8px; }
@@ -1025,12 +1210,43 @@
     .kakao-float { bottom: 16px; right: 16px; padding: 12px; }
   }
 
-  @media (max-width: 360px) {
+    @media (max-width: 360px) {
+    .session-num-wrap { min-width: 44px; }
+    .session-num-big { font-size: 18px; }
+    .price-actual { font-size: 32px; }
+    .hook-line2 { font-size: clamp(30px, 9vw, 64px); }
     .session-num-wrap { min-width: 44px; }
     .session-num-big { font-size: 18px; }
     .price-actual { font-size: 32px; }
     .hook-line2 { font-size: clamp(30px, 9vw, 64px); }
   }
+
+
+.kakao-float {
+  position: fixed;
+  bottom: 32px; right: 32px;
+  display: flex; align-items: center; gap: 8px;
+  background: #FEE500;
+  color: #3A1D1D;
+  font-size: 14px; font-weight: 800;
+  padding: 14px 22px;
+  border-radius: 100px;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  z-index: 9999;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.kakao-float:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+}
+
+
+
+
+  
+
 </style>
 </head>
 <body>
@@ -1125,6 +1341,66 @@
   </div>
 </section>
 
+<!-- ===== 인허가 신뢰 섹션 ===== -->
+<div class="license-section fade-in">
+  <div class="license-inner">
+    <div class="license-card">
+
+      <div class="license-top">
+        <div class="license-icon-wrap">🏛️</div>
+        <div class="license-text">
+          <div class="license-badge">✦ Official Licensed Academy</div>
+          <h2 class="license-headline">
+            <span class="hl-red">허위 과장 광고</span>로 사람 모아<br>
+            강의실 빌려서 한 달 하고 <span class="hl-red">떠나는 떠돌이</span>가 아닙니다.<br><br>
+            <em>정식 아지트</em>에서, <em>학원 인허가</em>까지 받고<br>
+            <em>책임을 다해</em> 강의합니다.
+          </h2>
+        </div>
+      </div>
+
+      <div class="license-divider"></div>
+
+      <div class="license-bottom">
+        <div class="license-facts">
+          <div class="license-fact">
+            <div class="license-fact-icon">📋</div>
+            <div>
+              <strong>정식 학원 인허가 취득</strong>
+              교육청 등록 교습소 운영
+            </div>
+          </div>
+          <div class="license-fact">
+            <div class="license-fact-icon">🏠</div>
+            <div>
+              <strong>전용 아지트 상시 운영</strong>
+              24시간 열린 크리에이터 공간
+            </div>
+          </div>
+          <div class="license-fact">
+            <div class="license-fact-icon">📜</div>
+            <div>
+              <strong>사업자 등록 정식 업체</strong>
+              에이아이위너스 611-11-39446
+            </div>
+          </div>
+          <div class="license-fact">
+            <div class="license-fact-icon">📍</div>
+            <div>
+              <strong>고정 주소 오프라인 운영</strong>
+              경기도 김포시 운양동
+            </div>
+          </div>
+        </div>
+        <div class="license-cta-text">
+          누가 더<br><span>신뢰가 갑니까?</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- ===== 후킹 문구 ===== -->
 <div class="hook-section fade-in">
   <div class="hook-inner">
@@ -1188,7 +1464,7 @@
 
     <a href="#sec-basic" class="class-card card-link">
       <div class="card-level">Step 01</div>
-      <div class="card-title">기초반 <span class="card-arrow">↓</span></div>
+      <div class="card-title">초보반 <span class="card-arrow">↓</span></div>
       <div class="card-desc">AI 툴을 처음 접하는 분들을 위한 과정. Gemini 사용법부터 인스타·유튜브 채널 개설, 콘텐츠 제작 루틴까지 차근차근 배워요</div>
       <div class="card-meta">
         <span class="meta-tag">매주 수요일</span>
@@ -1199,8 +1475,8 @@
 
     <a href="#sec-adv" class="class-card card-link">
       <div class="card-level">Step 02</div>
-      <div class="card-title">고급반 <span class="card-arrow">↓</span></div>
-      <div class="card-desc">기초를 익힌 분들을 위한 수익화 과정. 퍼스널 브랜드 구축부터 디지털 제품 판매, 광고 수익, 협찬까지 실제 돈 버는 구조를 만들어요</div>
+      <div class="card-title">수익화반 <span class="card-arrow">↓</span></div>
+      <div class="card-desc">본격적으로 수익을 내는 과정. 어필리에이트·광고 수익·협찬으로 실제 돈 버는 구조를 만들고, 수료 후 +1개월 강사 피드백까지 제공해요</div>
       <div class="card-meta">
         <span class="meta-tag">매주 목요일</span>
         <span class="meta-tag">오후 2시 ~ 6시</span>
@@ -1233,13 +1509,13 @@
   </div>
 </div>
 
-<!-- ===== 기초반 ===== -->
+<!-- ===== 초보반 ===== -->
 <div class="section fade-in" id="sec-basic">
   <div class="curriculum-block">
     <div class="block-header">
       <div class="block-icon icon-basic">🌱</div>
       <div class="block-title-wrap">
-        <div class="block-name">기초반 커리큘럼</div>
+        <div class="block-name">초보반 커리큘럼</div>
         <div class="block-duration">매주 수요일 오후 2시~6시 · 주 1회 × 4회</div>
       </div>
     </div>
@@ -1323,7 +1599,7 @@
             <li>지난 시간 복습 & 궁금한 점 Q&A</li>
             <li>4주 동안 만든 콘텐츠 돌아보기 — 잘 된 것과 아쉬운 것 함께 분석</li>
             <li>내 콘텐츠 강점 찾기 — 앞으로 어떤 방향으로 가면 좋을지</li>
-            <li>수익화의 다음 단계 미리 보기 — 고급반에서 어떻게 실제 수익으로 이어지는지</li>
+            <li>수익화의 다음 단계 미리 보기 — 수익화반에서 어떻게 실제 수익으로 이어지는지</li>
             <li>4주 과정 총정리 & 개인별 피드백</li>
             <li>수료식 & 수료증 수여</li>
           </ul>
@@ -1334,23 +1610,24 @@
   </div>
 </div>
 
-<!-- ===== 고급반 ===== -->
+<!-- ===== 수익화반 ===== -->
 <div class="section fade-in" id="sec-adv">
   <div class="curriculum-block">
     <div class="block-header">
       <div class="block-icon icon-adv">🔥</div>
       <div class="block-title-wrap">
-        <div class="block-name">고급반 커리큘럼</div>
+        <div class="block-name">수익화반 커리큘럼</div>
         <div class="block-duration">매주 목요일 오후 2시~6시 · 주 1회 × 4회</div>
       </div>
     </div>
 
     <div style="background: linear-gradient(135deg, #1a0f00, #221500); border: 1px solid rgba(232,184,75,0.3); border-radius: 14px; padding: 20px 24px; margin-bottom: 24px;">
-      <div style="font-size:13px; color:var(--gold); font-weight:700; margin-bottom:8px;">🎯 고급반을 수료하면</div>
+      <div style="font-size:13px; color:var(--gold); font-weight:700; margin-bottom:8px;">🎯 수익화반을 수료하면</div>
       <div style="font-size:13px; color:#ccc; line-height:2;">
         숏폼·롱폼 콘텐츠를 AI로 혼자 전부 제작할 수 있어요 &nbsp;·&nbsp;
-        쿠팡 파트너스·네이버 브랜드커넥트 등 어필리에이트 시스템을 직접 세팅하고 수익을 낼 수 있어요 &nbsp;·&nbsp;
-        유튜브 광고 수익·인스타 협찬까지 여러 수익 채널을 동시에 운영할 수 있어요
+        쿠팡 파트너스·네이버 브랜드커넥트·지그재그 어필리에이트를 직접 세팅하고 수익을 낼 수 있어요 &nbsp;·&nbsp;
+        유튜브 광고 수익·인스타 협찬까지 여러 수익 채널을 동시에 운영할 수 있어요 &nbsp;·&nbsp;
+        수료 후 <strong>+1개월 동안 아지트 상시 피드백</strong>을 받을 수 있어요
       </div>
     </div>
 
@@ -1367,7 +1644,7 @@
         </div>
         <div class="session-body">
           <ul class="content-list">
-            <li>지난 기초반 복습 & 고급반 전체 로드맵 안내</li>
+            <li>지난 초보반 복습 & 수익화반 전체 로드맵 안내</li>
             <li>바이럴 숏폼 공식 분석 — 첫 3초 훅(Hook) 설계법, 왜 어떤 영상은 터지는지</li>
             <li>Gemini로 영상 스크립트 → 콘티 → 편집 지시서까지 한 번에 뽑기</li>
             <li>AI 보이스오버 & 자막 자동화 실습 (ElevenLabs · CapCut AI)</li>
@@ -1426,7 +1703,7 @@
         <div class="session-header" onclick="toggle(this)">
           <div class="session-num-wrap"><div class="session-num">4회차</div><div class="session-num-big">04</div></div>
           <div class="session-title-wrap">
-            <div class="session-title">디지털 제품 론칭 & 수익 구조 완성</div>
+            <div class="session-title">어필리에이트 완전 세팅 & 수익 구조 완성</div>
             <div class="session-time">🕐 <strong>4시간</strong> · 오프라인 실습</div>
           </div>
           <div class="session-toggle">▾</div>
@@ -1434,16 +1711,16 @@
         <div class="session-body">
           <ul class="content-list">
             <li>지난 시간 복습 & 궁금한 점 Q&A</li>
-            <li>디지털 제품이란? — 전자책·템플릿·프리셋·온라인 강의 등 내가 만들어 파는 것들</li>
-            <li>Gemini로 전자책·PDF 30분 안에 만들기 실습</li>
-            <li>크몽·Gumroad 판매 페이지 직접 세팅 & 첫 상품 등록</li>
-            <li>이메일 리스트 구축 — 팬을 모으고 반복 구매를 만드는 구조 (Stibee 세팅)</li>
-            <li>어필리에이트 + 유튜브 광고 + 협찬 + 디지털 제품 — 4가지 수익을 동시에 굴리는 파이프라인 설계</li>
+            <li>지그재그 파트너스 가입 & 캠페인 신청 실습 — 패션·뷰티 특화 어필리에이트</li>
+            <li>지그재그 콘텐츠 연동법 — 상품 링크를 릴스·쇼츠에 자연스럽게 넣는 법</li>
+            <li>쿠팡 파트너스·네이버 브랜드커넥트·지그재그를 동시에 굴리는 다중 어필리에이트 구조 설계</li>
+            <li>플랫폼별 수익 데이터 비교 & 내 채널에 맞는 어필리에이트 조합 찾기</li>
+            <li>어필리에이트 + 유튜브 광고 수익 + 인스타 협찬 — 3가지 수익을 동시에 굴리는 파이프라인 완성</li>
             <li>개인별 월 수익 목표 & 실행 플랜 작성 + 강사 1:1 피드백</li>
             <li>수료식 & 수료증 수여</li>
           </ul>
         </div>
-      </div>
+      </div></div>
 
     </div>
   </div>
@@ -1622,35 +1899,33 @@
       </div>
 
       <h2 class="weekend-title">
-        AI로 음악을 만들고<br>
-        <span>자는 동안에도 수익이 들어오는</span><br>
-        플레이리스트를 운영하세요
+        코딩도 악기도 몰라도<br>
+        <span>AI가 만든 음악으로</span><br>
+        돈을 버는 사람들이 있습니다
       </h2>
       <p class="weekend-sub">
-        수노(Suno AI)로 직접 음악을 만들고, 유튜브·스포티파이 플레이리스트로<br>
-        <strong>광고 수익 + 스트리밍 수익</strong>을 동시에 내는 법을 알려드려요.<br>
-        이 특강은 <strong>기초반 또는 고급반 수강생에게만</strong> 열리며, 수강생 전용가 <strong>29만원</strong>에 참여할 수 있어요.
+        지금 유튜브엔 아무것도 안 하는 채널이 <strong>매달 수백만 원</strong>을 법니다.<br>
+        그 비밀을 이 특강에서 딱 하루 알려드려요.<br>
+        <strong>초보반 · 수익화반 수강생 전용 · 29만원</strong>
       </p>
 
       <div class="weekend-body">
         <div class="weekend-learn">
-          <div class="weekend-learn-title">🎹 이날 배우는 것</div>
+          <div class="weekend-learn-title">🤫 이런 걸 알게 됩니다</div>
           <ul>
-            <li>수노(Suno AI)로 장르·분위기·가사까지 원하는 음악 만들기</li>
-            <li>로파이·공부할 때 듣는 음악·수면 음악 등 인기 테마로 제작하기</li>
-            <li>Gemini로 플레이리스트 컨셉 & 트랙 리스트 기획하기</li>
-            <li>유튜브 플레이리스트 채널 개설 & 영상 포맷 제작 실습</li>
-            <li>스포티파이·애플뮤직 배포 방법 (DistroKid·TuneCore 활용)</li>
+            <li>음악을 만들어본 적 없어도 AI로 완성곡을 뽑는 방법</li>
+            <li>자고 일어나면 조회수가 쌓이는 채널을 만드는 구조</li>
+            <li>한 번 올리면 계속 돈이 들어오는 콘텐츠의 비밀</li>
+            <li>국내외 플랫폼에서 동시에 수익을 받는 방법</li>
           </ul>
         </div>
         <div class="weekend-money">
-          <div class="weekend-money-title">💸 수익화 방법</div>
+          <div class="weekend-money-title">💰 수강생 후기가 증명합니다</div>
           <ul>
-            <li>유튜브 플레이리스트 채널 광고 수익 — 누적 조회수로 자동 수익</li>
-            <li>스포티파이·애플뮤직 스트리밍 수익 — 재생될 때마다 정산</li>
-            <li>음악 라이선스 판매 — 영상 제작자에게 BGM으로 판매</li>
-            <li>멤버십 채널 운영 — 프리미엄 플레이리스트 구독 모델</li>
-            <li>어필리에이트 + 음악 채널 병행 — 집중력·수면 관련 제품 추천</li>
+            <li>영상 편집 한 번 안 하고 월 수익 발생</li>
+            <li>채널 개설 후 2주 만에 첫 수익 정산</li>
+            <li>자는 동안 조회수 올라 아침에 수익 확인</li>
+            <li>콘텐츠 하나가 몇 달째 계속 수익 중</li>
           </ul>
         </div>
       </div>
@@ -1663,7 +1938,7 @@
           </div>
           <div class="weekend-info-row">
             <span class="weekend-info-icon">👥</span>
-            <span><strong>기초반 · 고급반 수강생 한정</strong> 참여 가능</span>
+            <span><strong>초보반 · 수익화반 수강생 한정</strong> 참여 가능</span>
           </div>
           <div class="weekend-info-row">
             <span class="weekend-info-icon">🏠</span>
@@ -1730,9 +2005,9 @@
       <div class="slb-tag">🎵 Monthly Special Lecture</div>
       <div class="slb-title">수노(Suno AI) 음악 수익화 특강<br><span>이것만 알려주고 300만원 받는 곳이 있습니다</span></div>
       <div class="slb-desc">
-        AI로 음악을 만들고 유튜브·스포티파이 플레이리스트로 자동 수익을 내는 법.<br>
-        이 내용 하나만으로 타 업체는 <strong>100~300만원짜리 단독 강의</strong>를 팝니다.<br>
-        여기서는 <strong>수강생 전용가 단 29만원</strong>으로 참여할 수 있어요.
+        이 방법으로 돈을 버는 사람들이 있습니다. 그런데 아무도 안 가르쳐줘요.<br>
+        타 업체는 이 내용만 떼어내 <strong>100~300만원짜리 단독 강의</strong>로 팝니다.<br>
+        수강생에게는 <strong>단 29만원</strong>에 공개합니다.
       </div>
       <div class="slb-items">
         <div class="slb-item">
@@ -1774,7 +2049,7 @@
 
     <div class="price-card" style="cursor:pointer;" onclick="selectCourseAndScroll('basic')">
       <div class="price-level">Step 01</div>
-      <div class="price-name">기초반</div>
+      <div class="price-name">초보반</div>
       <div class="price-schedule">매주 수요일 · 주 1회 × 4회 · 4시간</div>
       <div class="price-value-breakdown">
         <div class="breakdown-row"><span>강의 4회 시장가</span><span class="strike">~32만원</span></div>
@@ -1796,22 +2071,28 @@
 
     <div class="price-card" style="cursor:pointer;" onclick="selectCourseAndScroll('adv')">
       <div class="price-level">Step 02</div>
-      <div class="price-name">고급반</div>
+      <div class="price-name">수익화반</div>
       <div class="price-schedule">매주 목요일 · 주 1회 × 4회 · 4시간</div>
       <div class="price-value-breakdown">
-        <div class="breakdown-row"><span>강의 4회 시장가</span><span class="strike">~48만원</span></div>
+        <div class="breakdown-row"><span>강의 4회 시장가</span><span class="strike">~60만원</span></div>
         <div class="breakdown-row"><span>아지트 1개월 이용</span><span class="strike">~35만원</span></div>
+        <div class="breakdown-row"><span>수료 후 1개월 피드백</span><span class="strike">~30만원</span></div>
         <div class="breakdown-total-label">합산 시장가</div>
-        <div class="breakdown-market">약 83만원</div>
+        <div class="breakdown-market">약 125만원</div>
       </div>
       <div class="price-divider"></div>
       <div class="price-actual-label">실제 수강료</div>
-      <div class="price-actual">79<span class="price-won">만원</span></div>
-      <div class="price-saving">💰 강의 + 아지트 포함 가격</div>
+      <div class="price-actual">99<span class="price-won">만원</span></div>
+      <div style="background:rgba(232,184,75,0.08); border:1px solid rgba(232,184,75,0.25); border-radius:10px; padding:12px 14px; margin-bottom:12px;">
+        <div style="font-size:12px; color:var(--gold); font-weight:800; margin-bottom:6px;">🎁 수익화반 특별 혜택</div>
+        <div style="font-size:12px; color:#bbb; line-height:1.8;">4주 과정 수료 후 <strong style="color:var(--gold-light);">+1개월</strong> 동안<br>아지트에서 강사 상시 피드백 제공</div>
+      </div>
+      <div class="price-saving">💰 약 26만원 이득</div>
       <ul class="price-includes">
         <li>✦ 오프라인 실습 강의 4회</li>
         <li>✦ 아지트 1개월 무료 이용</li>
         <li>✦ 24시간 작업공간 개방</li>
+        <li>✦ 수료 후 +1개월 아지트 피드백</li>
         <li>✦ 수료증 발급</li>
       </ul>
     </div>
@@ -1842,10 +2123,10 @@
 
   <!-- 패키지 -->
   <div class="package-card" style="margin-bottom: 16px; cursor:pointer;" onclick="selectCourseAndScroll('pkg');">
-    <div class="package-badge">🏆 BEST VALUE — 기초 + 고급 패키지</div>
+    <div class="package-badge">🏆 BEST VALUE — 초보 + 수익화 패키지</div>
     <div class="package-top">
       <div class="package-left">
-        <div class="package-name">기초 + 고급<br><span>완전 정복 패키지</span></div>
+        <div class="package-name">초보 + 수익화<br><span>완전 정복 패키지</span></div>
         <div class="package-sub">처음부터 수익 구조 완성까지, 가장 확실한 선택</div>
         <div class="package-includes">
           <span>✦ 총 8회 수업</span>
@@ -1856,17 +2137,17 @@
       </div>
       <div class="package-right">
         <div class="package-market-label">개별 구매 시</div>
-        <div class="package-market">118만원</div>
+        <div class="package-market">138만원</div>
         <div class="package-arrow">↓</div>
         <div class="package-price-label">패키지 수강료</div>
-        <div class="package-price">99<span>만원</span></div>
-        <div class="package-saving">19만원 할인 + 아지트 2개월 (약 70만원 상당) 포함</div>
+        <div class="package-price">120<span>만원</span></div>
+        <div class="package-saving">18만원 할인 + 아지트 2개월 (약 70만원 상당) 포함</div>
       </div>
     </div>
     <div class="package-roi">
       <div class="roi-title">📈 이렇게 계산해보세요</div>
       <div class="roi-text">
-        고급반에서 디지털 제품 하나만 팔아도 수강료 바로 회수 · 아지트를 매달 활용하면 코워킹 비용만으로도 이미 본전 · <strong>강의와 네트워크는 그냥 덤입니다.</strong>
+        수익화반에서 디지털 제품 하나만 팔아도 수강료 바로 회수 · 아지트를 매달 활용하면 코워킹 비용만으로도 이미 본전 · <strong>강의와 네트워크는 그냥 덤입니다.</strong>
       </div>
     </div>
   </div>
@@ -1885,9 +2166,9 @@
         <div style="background:rgba(124,58,237,0.1); border:1px solid rgba(124,58,237,0.3); border-radius:12px; padding:16px; margin-bottom:16px;">
           <div style="font-size:12px; color:#a78bfa; font-weight:700; margin-bottom:8px;">🎯 이 과정과 비교해보세요</div>
           <div style="font-size:12px; color:#aaa; line-height:2;">
-            기초반 · 고급반은 <strong style="color:#e2d9f3;">스마트폰과 AI 툴</strong>만 있으면 시작 가능<br>
+            초보반 · 수익화반은 <strong style="color:#e2d9f3;">스마트폰과 AI 툴</strong>만 있으면 시작 가능<br>
             최상급반은 <strong style="color:#c4b5fd;">코딩 + 서버 지식</strong>이 필요한 전문가 과정<br>
-            대부분의 수강생에게는 <strong style="color:#fcd34d;">기초·고급반으로 충분</strong>해요
+            대부분의 수강생에게는 <strong style="color:#fcd34d;">초보·수익화반으로 충분</strong>해요
           </div>
         </div>
         <div style="display:flex; flex-wrap:wrap; gap:8px;">
@@ -1960,7 +2241,7 @@
               <input type="radio" name="course" value="basic">
               <div class="check-dot"></div>
               <div class="check-text">
-                🌱 기초반 · 주 1회 × 4회 · 4시간
+                🌱 초보반 · 주 1회 × 4회 · 4시간
                 <div class="check-schedule">📅 매주 수요일 오후 2시 ~ 6시</div>
               </div>
               <span class="check-price">39만원</span>
@@ -1969,10 +2250,10 @@
               <input type="radio" name="course" value="adv">
               <div class="check-dot"></div>
               <div class="check-text">
-                🔥 고급반 · 주 1회 × 4회 · 4시간
+                🔥 수익화반 · 주 1회 × 4회 · 4시간
                 <div class="check-schedule">📅 매주 목요일 오후 2시 ~ 6시</div>
               </div>
-              <span class="check-price">79만원</span>
+              <span class="check-price">99만원</span>
             </label>
             <label class="form-check" onclick="selectCourse(this)">
               <input type="radio" name="course" value="biz">
@@ -1987,10 +2268,10 @@
               <input type="radio" name="course" value="pkg">
               <div class="check-dot"></div>
               <div class="check-text">
-                🏆 기초 + 고급 패키지
+                🏆 초보 + 수익화 패키지
                 <div class="check-schedule">📅 수·목 오후 2시 ~ 6시 (총 8회)</div>
               </div>
-              <span class="check-price">99만원</span>
+              <span class="check-price">120만원</span>
             </label>
             <label class="form-check" onclick="selectCourse(this)" style="border-color:rgba(124,58,237,0.5); background:rgba(124,58,237,0.05);">
               <input type="radio" name="course" value="master">
@@ -2074,7 +2355,7 @@
         <div class="footer-biz-row"><span class="footer-biz-label">사업자등록번호</span><span>611-11-39446</span></div>
         <div class="footer-biz-row"><span class="footer-biz-label">사업장 소재지</span><span>경기도 김포시 김포한강1로 250, 8층 804호 (운양동)</span></div>
         <div class="footer-biz-row"><span class="footer-biz-label">업태 / 종목</span><span>교육서비스업 / 기타 교육지원 서비스업</span></div>
-        <div class="footer-biz-row"><span class="footer-biz-label">이메일</span><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9cfdf5ebf5f2f2f9eeefb2afafdcfbf1fdf5f0b2fff3f1">[email&#160;protected]</a></span></div>
+        <div class="footer-biz-row"><span class="footer-biz-label">이메일</span><span>aiwinners.33@gmail.com</span></div>
         <div class="footer-biz-row"><span class="footer-biz-label">통신판매업 신고</span><span>해당 없음 (오프라인 강의)</span></div>
       </div>
     </div>
@@ -2094,7 +2375,7 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // 과정 카드 클릭 시 해당 과정 자동 선택 + 폼으로 스크롤
   function selectCourseAndScroll(courseValue) {
     // 폼으로 스크롤
@@ -2195,99 +2476,6 @@
   <span>카카오톡 문의</span>
 </a>
 
-<style>
-.kakao-float {
-  position: fixed;
-  bottom: 28px; right: 28px;
-  display: flex; align-items: center; gap: 8px;
-  background: #FEE500;
-  color: #3A1D1D;
-  font-size: 14px; font-weight: 800;
-  padding: 14px 22px;
-  border-radius: 100px;
-  text-decoration: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  z-index: 9999;
-  transition: transform 0.2s, box-shadow 0.2s;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.kakao-float:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.4);
-}
-@media (max-width: 480px) {
-  .kakao-float span { display: none; }
-  .kakao-float { padding: 14px; border-radius: 50%; }
-}
 
-  /* ===== 모바일 추가 대응 ===== */
-  @media (max-width: 480px) {
-
-    /* 히어로 */
-    .hero { padding: 60px 20px 40px; }
-    .hero-chips { gap: 8px; }
-    .chip { padding: 7px 14px; font-size: 12px; }
-
-    /* 신뢰 섹션 */
-    .trust-cards { grid-template-columns: 1fr; }
-    .trust-stat-num { font-size: 40px; }
-
-    /* 후킹 섹션 */
-    .hook-section { padding: 80px 20px 60px; }
-    .hook-compare-wrap { overflow: hidden; }
-
-    /* 과정 카드 */
-    .classes-grid { grid-template-columns: 1fr; }
-
-    /* 커리큘럼 */
-    .block-name { font-size: 20px; }
-    .session-title { font-size: 15px; }
-    .session-num-big { font-size: 22px; }
-    .session-header { padding: 14px 16px; gap: 10px; }
-
-    /* 가격표 */
-    .price-grid { grid-template-columns: 1fr; }
-    .value-items { grid-template-columns: 1fr 1fr; }
-    .package-top { flex-direction: column; }
-    .package-right { text-align: left; }
-
-    /* 특강 박스 */
-    .special-lecture-box { flex-direction: column; }
-    .slb-right { width: 100%; }
-
-    /* 주말특강 */
-    .weekend-card { padding: 28px 20px; }
-    .weekend-bottom { flex-direction: column; align-items: flex-start; }
-    .weekend-cta { width: 100%; justify-content: center; }
-
-    /* 폼 */
-    .form-card { padding: 24px 20px; }
-    .form-submit { font-size: 15px; padding: 16px; }
-    .check-price { font-size: 13px; }
-
-    /* 비교표 */
-    .hook-compare { grid-template-columns: 1fr; border-radius: 16px; }
-    .hook-compare-vs { height: 36px; writing-mode: horizontal-tb !important; }
-    .hook-compare-item.bad { border-radius: 16px 16px 0 0; }
-    .hook-compare-item.good { border-radius: 0 0 16px 16px; }
-
-    /* 최상급반 */
-    .slb-compare { padding: 20px; }
-
-    /* 푸터 */
-    .footer-biz-row { flex-direction: column; gap: 2px; }
-    .footer-biz-label { min-width: unset; color: var(--gold); font-size: 12px; }
-
-    /* 카카오 버튼 */
-    .kakao-float { bottom: 16px; right: 16px; padding: 12px; }
-  }
-
-  @media (max-width: 360px) {
-    .session-num-wrap { min-width: 44px; }
-    .session-num-big { font-size: 18px; }
-    .price-actual { font-size: 32px; }
-    .hook-line2 { font-size: clamp(30px, 9vw, 64px); }
-  }
-</style>
 </body>
 </html>
