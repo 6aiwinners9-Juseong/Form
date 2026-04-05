@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kling 3.0 프롬프트 마스터 가이드 | AI 프롬프트 생성기 포함</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-card-hover: #1a1a28;
+  --accent-primary: #7c5cfc;
+  --accent-glow: #a78bfa;
+  --accent-hot: #f97316;
+  --accent-cyan: #22d3ee;
+  --accent-green: #34d399;
+  --accent-rose: #fb7185;
+  --text-main: #e8e6f0;
+  --text-dim: #8b89a0;
+  --text-bright: #ffffff;
+  --border-subtle: rgba(124, 92, 252, 0.15);
+  --glass: rgba(18, 18, 26, 0.85);
+  --gradient-hero: linear-gradient(135deg, #7c5cfc 0%, #22d3ee 50%, #f97316 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-main);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 2rem; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(124,92,252,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(34,211,238,0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(249,115,22,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(124,92,252,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(124,92,252,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%);
+  animation: gridPulse 8s ease-in-out infinite;
+}
+@keyframes gridPulse { 0%,100%{opacity:.4} 50%{opacity:.8} }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .5rem 1.2rem; border-radius: 999px;
+  border: 1px solid var(--border-subtle); background: var(--glass);
+  font-size: .85rem; color: var(--accent-glow); letter-spacing: .05em;
+  margin-bottom: 2rem; animation: fadeUp .8s ease both; backdrop-filter: blur(12px);
+}
+.hero-badge .dot { width:8px;height:8px;border-radius:50%;background:var(--accent-green);animation:blink 2s ease-in-out infinite }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem,7vw,5.5rem);
+  font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem;
+  animation: fadeUp .8s .15s ease both;
+}
+.hero h1 .gradient-text {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(1rem,2.5vw,1.3rem); color: var(--text-dim);
+  max-width: 680px; margin-bottom: 3rem;
+  animation: fadeUp .8s .3s ease both; font-weight: 300;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+.hero-nav {
+  display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center;
+  animation: fadeUp .8s .45s ease both;
+}
+.hero-nav a {
+  padding: .7rem 1.5rem; border-radius: 12px;
+  border: 1px solid var(--border-subtle); color: var(--text-main);
+  text-decoration: none; font-size: .9rem; transition: all .3s;
+  background: var(--glass); backdrop-filter: blur(8px);
+}
+.hero-nav a:hover { border-color: var(--accent-primary); background: rgba(124,92,252,.1); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,92,252,.15); }
+.hero-nav a.cta-primary { background: var(--accent-primary); border-color: var(--accent-primary); color: white; font-weight: 600; }
+.hero-nav a.cta-primary:hover { background: #6a4ae8; box-shadow: 0 8px 30px rgba(124,92,252,.4); }
+
+.scroll-indicator { position: absolute; bottom: 2rem; animation: bounce 2s ease-in-out infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+.scroll-indicator svg { width:28px;height:28px;stroke:var(--text-dim) }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 5rem 0; }
+
+.section-label {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: 'JetBrains Mono', monospace; font-size: .8rem;
+  color: var(--accent-primary); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1rem;
+}
+.section-label::before { content:''; width:32px; height:2px; background:var(--accent-primary) }
+
+section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 900;
+  color: var(--text-bright); margin-bottom: 1rem; line-height: 1.2;
+}
+section .section-desc { color: var(--text-dim); font-size: 1.05rem; max-width: 700px; margin-bottom: 3rem; font-weight: 300; }
+
+.card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 16px; padding: 2rem; transition: all .4s; position: relative; overflow: hidden;
+}
+.card::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; background:var(--gradient-hero); opacity:0; transition:opacity .4s }
+.card:hover { background: var(--bg-card-hover); border-color: rgba(124,92,252,.3); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+.card:hover::before { opacity: 1 }
+.card-icon { width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem }
+.card h3 { font-size: 1.2rem; font-weight: 700; color: var(--text-bright); margin-bottom: .8rem; }
+.card p { color: var(--text-dim); font-size: .95rem; line-height: 1.7; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 1.5rem; }
+
+.formula-block {
+  background: linear-gradient(135deg, rgba(124,92,252,.08), rgba(34,211,238,.05));
+  border: 1px solid var(--border-subtle); border-radius: 20px;
+  padding: 3rem; margin: 2rem 0; text-align: center;
+}
+.formula-visual { display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.75rem;margin:2rem 0 }
+.formula-chip { padding:.7rem 1.2rem;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;white-space:nowrap }
+.formula-plus { font-size:1.3rem;color:var(--text-dim);font-weight:300 }
+
+.prompt-example { background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:16px;overflow:hidden;margin:1.5rem 0 }
+.prompt-header { display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:rgba(124,92,252,.06);border-bottom:1px solid var(--border-subtle) }
+.prompt-tag { font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:.25rem .7rem;border-radius:6px;font-weight:600 }
+.prompt-body { padding:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.85rem;line-height:1.9;color:var(--text-main);white-space:pre-wrap }
+.prompt-body .kw-camera{color:var(--accent-cyan)} .prompt-body .kw-subject{color:var(--accent-hot)} .prompt-body .kw-env{color:var(--accent-green)} .prompt-body .kw-detail{color:var(--accent-rose)} .prompt-body .kw-audio{color:var(--accent-glow)}
+.prompt-legend { display:flex;flex-wrap:wrap;gap:1rem;padding:1rem 1.5rem;border-top:1px solid var(--border-subtle);font-size:.78rem }
+.prompt-legend span { display:flex;align-items:center;gap:.35rem }
+.prompt-legend .dot-legend { width:10px;height:10px;border-radius:3px }
+
+table.compare-table { width:100%;border-collapse:separate;border-spacing:0;margin:2rem 0;border-radius:16px;overflow:hidden;border:1px solid var(--border-subtle) }
+.compare-table th { background:rgba(124,92,252,.1);padding:1rem 1.5rem;text-align:left;font-weight:600;font-size:.9rem;color:var(--accent-glow);border-bottom:1px solid var(--border-subtle) }
+.compare-table td { padding:1rem 1.5rem;border-bottom:1px solid rgba(124,92,252,.06);font-size:.9rem;vertical-align:top }
+.compare-table tr:last-child td { border-bottom:none }
+.compare-table .good { color:var(--accent-green) }
+
+.tip-box { display:flex;gap:1rem;padding:1.5rem;border-radius:14px;margin:1.5rem 0;align-items:flex-start }
+.tip-box.warning { background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2) }
+.tip-box.success { background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2) }
+.tip-box.info { background:rgba(124,92,252,.08);border:1px solid rgba(124,92,252,.2) }
+.tip-box .tip-icon { font-size:1.4rem;flex-shrink:0;margin-top:2px }
+.tip-box .tip-content h4 { font-size:.95rem;font-weight:700;margin-bottom:.4rem;color:var(--text-bright) }
+.tip-box .tip-content p { font-size:.9rem;color:var(--text-dim);line-height:1.7 }
+
+.step-flow { position:relative;padding-left:3rem;margin:2rem 0 }
+.step-flow::before { content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent-primary),var(--accent-cyan),var(--accent-hot)) }
+.step-item { position:relative;margin-bottom:2.5rem }
+.step-item:last-child { margin-bottom:0 }
+.step-num { position:absolute;left:-3rem;top:0;width:32px;height:32px;border-radius:50%;background:var(--bg-deep);border:2px solid var(--accent-primary);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;color:var(--accent-primary) }
+.step-item h4 { font-size:1.1rem;font-weight:700;color:var(--text-bright);margin-bottom:.5rem }
+.step-item p { color:var(--text-dim);font-size:.95rem;line-height:1.7 }
+
+.checklist { list-style:none;margin:1.5rem 0 }
+.checklist li { display:flex;align-items:flex-start;gap:.75rem;padding:.7rem 0;font-size:.95rem;color:var(--text-main);border-bottom:1px solid rgba(124,92,252,.06) }
+.checklist li:last-child { border-bottom:none }
+.checklist .check { flex-shrink:0;color:var(--accent-green);font-size:1.1rem;margin-top:2px }
+
+.toc { position:fixed;right:2rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.6rem }
+.toc a { display:block;width:10px;height:10px;border-radius:50%;background:rgba(124,92,252,.3);transition:all .3s;position:relative }
+.toc a:hover,.toc a.active { background:var(--accent-primary);box-shadow:0 0 12px var(--accent-primary);transform:scale(1.3) }
+.toc a::after { content:attr(data-label);position:absolute;right:20px;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:.75rem;color:var(--text-dim);opacity:0;transition:opacity .3s;pointer-events:none }
+.toc a:hover::after { opacity:1 }
+
+.section-divider { border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border-subtle),transparent);margin:0 }
+code { font-family:'JetBrains Mono',monospace;background:rgba(124,92,252,.12);padding:.15rem .5rem;border-radius:5px;font-size:.85em;color:var(--accent-glow) }
+
+.reveal { opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.22,1,.36,1) }
+.reveal.visible { opacity:1;transform:translateY(0) }
+
+footer { text-align:center;padding:4rem 2rem;color:var(--text-dim);font-size:.85rem;border-top:1px solid var(--border-subtle) }
+
+@media(max-width:768px){
+  .toc{display:none} .container{padding:0 1.2rem} section{padding:3rem 0}
+  .formula-block{padding:2rem 1.5rem} .compare-table th,.compare-table td{padding:.7rem 1rem}
+}
+
+/* ======= GENERATOR ======= */
+#generator { background: linear-gradient(180deg, var(--bg-deep) 0%, #0e0e1a 100%); }
+
+.gen-wrapper {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 24px; overflow: hidden; box-shadow: 0 0 80px rgba(124,92,252,.08);
+}
+.gen-header {
+  padding: 2rem 2.5rem;
+  background: linear-gradient(135deg, rgba(124,92,252,.1), rgba(34,211,238,.06));
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+}
+.gen-header-icon { width:52px;height:52px;border-radius:14px;background:var(--gradient-hero);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0 }
+.gen-header-text h3 { font-size:1.3rem;font-weight:700;color:var(--text-bright) }
+.gen-header-text p { font-size:.85rem;color:var(--text-dim) }
+
+.gen-body { padding: 2.5rem; display: flex; flex-direction: column; gap: 2rem; }
+.gen-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media(max-width:700px){ .gen-row{grid-template-columns:1fr} }
+
+.gen-field label { display:block;font-size:.85rem;font-weight:600;color:var(--text-main);margin-bottom:.5rem }
+.gen-field label .label-hint { font-weight:400;color:var(--text-dim);font-size:.78rem;margin-left:.3rem }
+
+.gen-field input,.gen-field select,.gen-field textarea {
+  width:100%;padding:.85rem 1.1rem;border-radius:12px;border:1px solid var(--border-subtle);
+  background:rgba(255,255,255,.03);color:var(--text-main);
+  font-family:'Noto Sans KR',sans-serif;font-size:.95rem;transition:border-color .3s,box-shadow .3s;outline:none;
+}
+.gen-field input:focus,.gen-field select:focus,.gen-field textarea:focus { border-color:var(--accent-primary);box-shadow:0 0 0 3px rgba(124,92,252,.15) }
+.gen-field select { cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238b89a0' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem }
+.gen-field select option { background:var(--bg-card);color:var(--text-main) }
+.gen-field textarea { min-height:90px;resize:vertical;line-height:1.7 }
+
+.api-key-row { display:flex;gap:1rem;align-items:flex-end }
+.api-key-row .gen-field { flex:1 }
+.api-key-row .help-link {
+  padding:.85rem 1.2rem;border-radius:12px;background:rgba(124,92,252,.1);border:1px solid var(--border-subtle);
+  color:var(--accent-glow);text-decoration:none;font-size:.82rem;white-space:nowrap;transition:all .3s;
+  flex-shrink:0;display:flex;align-items:center;gap:.4rem;
+}
+.api-key-row .help-link:hover { background:rgba(124,92,252,.2);border-color:var(--accent-primary) }
+
+.chip-group { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.3rem }
+.chip {
+  padding:.45rem 1rem;border-radius:8px;font-size:.82rem;border:1px solid var(--border-subtle);
+  background:transparent;color:var(--text-dim);cursor:pointer;transition:all .25s;font-family:'Noto Sans KR',sans-serif;
+}
+.chip:hover { border-color:var(--accent-primary);color:var(--text-main) }
+.chip.selected { background:var(--accent-primary);border-color:var(--accent-primary);color:white }
+
+.gen-btn {
+  padding:1rem 2.5rem;border:none;border-radius:14px;background:var(--gradient-hero);color:white;
+  font-family:'Noto Sans KR',sans-serif;font-size:1.05rem;font-weight:700;cursor:pointer;
+  transition:all .3s;letter-spacing:.02em;position:relative;overflow:hidden;
+}
+.gen-btn:hover { transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,92,252,.3) }
+.gen-btn:active { transform:translateY(0) }
+.gen-btn:disabled { opacity:.5;cursor:not-allowed;transform:none;box-shadow:none }
+.gen-btn .spinner { display:none;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;margin-right:.5rem }
+.gen-btn.loading .spinner { display:inline-block }
+.gen-btn.loading .btn-text { opacity:.7 }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+.gen-result { display:none;margin-top:1rem }
+.gen-result.visible { display:block }
+
+.result-box { background:rgba(0,0,0,.3);border:1px solid var(--border-subtle);border-radius:16px;overflow:hidden }
+.result-header { display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;background:rgba(52,211,153,.06);border-bottom:1px solid var(--border-subtle) }
+.result-header span { font-weight:600;color:var(--accent-green);font-size:.9rem }
+.copy-btn { padding:.4rem 1rem;border-radius:8px;border:1px solid var(--border-subtle);background:transparent;color:var(--text-dim);cursor:pointer;font-size:.8rem;font-family:'JetBrains Mono',monospace;transition:all .25s }
+.copy-btn:hover { border-color:var(--accent-green);color:var(--accent-green) }
+
+.result-content {
+  padding:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.88rem;line-height:2;color:var(--text-main);
+  white-space:pre-wrap;word-break:break-word;max-height:500px;overflow-y:auto;
+}
+.result-content::-webkit-scrollbar{width:6px} .result-content::-webkit-scrollbar-track{background:transparent} .result-content::-webkit-scrollbar-thumb{background:var(--border-subtle);border-radius:3px}
+
+.error-msg { padding:1.2rem 1.5rem;border-radius:12px;margin-top:1rem;background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.2);color:var(--accent-rose);font-size:.9rem;display:none }
+.error-msg.visible { display:block }
+
+.model-info { display:flex;align-items:center;gap:.5rem;padding:.8rem 1.2rem;border-radius:10px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.12);font-size:.82rem;color:var(--accent-cyan) }
+.model-info .mi-dot { width:6px;height:6px;border-radius:50%;background:var(--accent-cyan) }
+</style>
+</head>
+<body>
+
+<nav class="toc">
+  <a href="#hero" data-label="시작"></a>
+  <a href="#generator" data-label="🤖 AI 생성기"></a>
+  <a href="#mindset" data-label="마인드셋"></a>
+  <a href="#reference" data-label="레퍼런스"></a>
+  <a href="#formula" data-label="프롬프트 공식"></a>
+  <a href="#camera" data-label="카메라"></a>
+  <a href="#multishot" data-label="멀티샷"></a>
+  <a href="#negative" data-label="네거티브"></a>
+  <a href="#troubleshoot" data-label="트러블슈팅"></a>
+</nav>
+
+<header class="hero" id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-badge"><span class="dot"></span> Gemini AI 프롬프트 생성기 포함</div>
+  <h1><span class="gradient-text">Kling 3.0</span><br>프롬프트 마스터 가이드</h1>
+  <p class="hero-sub">레퍼런스 이미지로 원하는 스토리의 영상을 뽑아내는 모든 꿀팁.<br>AI가 최적의 프롬프트를 자동으로 만들어 드립니다.</p>
+  <nav class="hero-nav">
+    <a href="#generator" class="cta-primary">🤖 AI 프롬프트 생성기</a>
+    <a href="#mindset">핵심 마인드셋</a>
+    <a href="#reference">레퍼런스 활용</a>
+    <a href="#formula">프롬프트 공식</a>
+    <a href="#camera">카메라 워크</a>
+    <a href="#troubleshoot">문제 해결</a>
+  </nav>
+  <div class="scroll-indicator"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg></div>
+</header>
+
+<!-- ========== AI PROMPT GENERATOR ========== -->
+<hr class="section-divider">
+<section id="generator">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">AI Prompt Generator</span>
+      <h2>🤖 Kling 3.0 프롬프트 자동 생성기</h2>
+      <p class="section-desc">원하는 장면을 한국어로 설명하면, Gemini AI가 위 가이드의 모든 원칙을 적용하여 최적의 Kling 3.0 프롬프트를 자동으로 만들어 드립니다.</p>
+    </div>
+
+    <div class="gen-wrapper reveal">
+      <div class="gen-header">
+        <div class="gen-header-icon">✨</div>
+        <div class="gen-header-text">
+          <h3>Kling 3.0 Prompt Generator</h3>
+          <p>Powered by Gemini 2.5 Flash (무료 티어)</p>
+        </div>
+      </div>
+
+      <div class="gen-body">
+        <div class="gen-field">
+          <label>Gemini API Key <span class="label-hint">— Google AI Studio에서 무료 발급</span></label>
+          <div class="api-key-row">
+            <div class="gen-field" style="margin-bottom:0">
+              <input type="password" id="apiKey" placeholder="AIzaSy... 형태의 API 키를 입력하세요" autocomplete="off">
+            </div>
+            <a href="https://aistudio.google.com/apikey" target="_blank" class="help-link">🔑 무료 API 키 발급</a>
+          </div>
+        </div>
+
+        <div class="model-info">
+          <span class="mi-dot"></span>
+          모델: <strong>gemini-2.5-flash</strong> — 무료 티어 최신 모델 (10 RPM / 250 RPD / 100만 토큰 컨텍스트)
+        </div>
+
+        <div class="gen-field">
+          <label>장면 설명 <span class="label-hint">— 원하는 장면을 자유롭게 한국어로 설명하세요</span></label>
+          <textarea id="sceneDesc" placeholder="예: 비 오는 밤, 도쿄 골목길의 라멘 가게. 젊은 여성이 김이 모락모락 나는 라멘을 먹고 있다. 네온사인이 얼굴에 반사되고, 카메라가 천천히 다가간다."></textarea>
+        </div>
+
+        <div class="gen-row">
+          <div class="gen-field">
+            <label>생성 모드</label>
+            <select id="genMode">
+              <option value="text-to-video">Text-to-Video (새로운 장면)</option>
+              <option value="image-to-video">Image-to-Video (레퍼런스 기반)</option>
+              <option value="multi-shot">Multi-Shot (멀티샷 시퀀스)</option>
+            </select>
+          </div>
+          <div class="gen-field">
+            <label>영상 길이</label>
+            <select id="duration">
+              <option value="5">5초 (짧은 클립)</option>
+              <option value="10" selected>10초 (표준)</option>
+              <option value="15">15초 (최대)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="gen-row">
+          <div class="gen-field">
+            <label>카메라 스타일</label>
+            <select id="cameraStyle">
+              <option value="auto">🎬 AI 자동 선택</option>
+              <option value="static-tripod">고정 삼각대 (Static Tripod)</option>
+              <option value="slow-dolly">느린 돌리 푸시 (Slow Dolly Push-in)</option>
+              <option value="handheld">핸드헬드 (Handheld Shoulder-cam)</option>
+              <option value="tracking">트래킹 샷 (Tracking Shot)</option>
+              <option value="aerial">드론/에어리얼 (Aerial Orbit)</option>
+              <option value="macro">매크로 클로즈업 (Macro Close-up)</option>
+              <option value="pov">1인칭 시점 (POV)</option>
+              <option value="low-angle">로우 앵글 (Low-Angle Wide)</option>
+            </select>
+          </div>
+          <div class="gen-field">
+            <label>분위기/무드</label>
+            <select id="mood">
+              <option value="auto">🎭 AI 자동 선택</option>
+              <option value="cinematic">시네마틱 (Cinematic)</option>
+              <option value="dramatic">드라마틱 (Dramatic/Tense)</option>
+              <option value="warm">따뜻한 (Warm/Cozy)</option>
+              <option value="dark">다크/무드 (Dark/Moody)</option>
+              <option value="energetic">에너제틱 (Energetic/Dynamic)</option>
+              <option value="dreamy">몽환적 (Dreamy/Ethereal)</option>
+              <option value="retro">레트로 (VHS/Film Grain)</option>
+              <option value="anime">애니메이션 (Anime/Cel-shaded)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="gen-field">
+          <label>필름 스타일 <span class="label-hint">— 클릭하여 선택 (복수 선택 가능)</span></label>
+          <div class="chip-group" id="filmChips">
+            <button class="chip" data-value="35mm film grain">35mm 필름</button>
+            <button class="chip" data-value="anamorphic lens flare">아나모픽 렌즈</button>
+            <button class="chip" data-value="shallow depth of field">얕은 심도</button>
+            <button class="chip" data-value="VHS camcorder aesthetic">VHS 레트로</button>
+            <button class="chip" data-value="IMAX 70mm ultra sharp">IMAX 70mm</button>
+            <button class="chip" data-value="film noir high contrast">필름 누아르</button>
+            <button class="chip" data-value="golden hour warm glow">골든 아워</button>
+            <button class="chip" data-value="neon-lit cyberpunk">사이버펑크 네온</button>
+          </div>
+        </div>
+
+        <div class="gen-row">
+          <div class="gen-field">
+            <label>오디오/대사</label>
+            <select id="audioOption">
+              <option value="none">오디오 없음</option>
+              <option value="ambient">환경 사운드만</option>
+              <option value="dialogue">대사 포함</option>
+              <option value="music">배경 음악 지정</option>
+            </select>
+          </div>
+          <div class="gen-field">
+            <label>추가 지시사항 <span class="label-hint">— 선택</span></label>
+            <input type="text" id="extraNotes" placeholder="예: 캐릭터가 안경을 쓰고 있음, 제품 클로즈업 포함 등">
+          </div>
+        </div>
+
+        <div class="gen-field" style="display:flex;align-items:center;gap:.7rem">
+          <input type="checkbox" id="includeNeg" checked style="width:18px;height:18px;accent-color:var(--accent-primary)">
+          <label for="includeNeg" style="margin-bottom:0;cursor:pointer">네거티브 프롬프트 자동 포함</label>
+        </div>
+
+        <div style="display:flex;justify-content:center;padding-top:.5rem">
+          <button class="gen-btn" id="generateBtn" onclick="generatePrompt()">
+            <span class="spinner"></span>
+            <span class="btn-text">✨ Kling 3.0 프롬프트 생성하기</span>
+          </button>
+        </div>
+
+        <div class="error-msg" id="errorMsg"></div>
+
+        <div class="gen-result" id="resultArea">
+          <div class="result-box">
+            <div class="result-header">
+              <span>✅ 생성된 Kling 3.0 프롬프트</span>
+              <button class="copy-btn" onclick="copyResult()">📋 복사</button>
+            </div>
+            <div class="result-content" id="resultContent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GUIDE SECTIONS ========== -->
+<hr class="section-divider">
+<section id="mindset">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">01 — Core Mindset</span>
+      <h2>가장 중요한 단 하나의 원칙</h2>
+      <p class="section-desc">Kling 3.0에서 좋은 결과를 얻으려면, 프롬프트 작성의 사고방식 자체를 바꿔야 합니다.</p>
+    </div>
+    <div class="grid-2 reveal">
+      <div class="card" style="border-left:3px solid var(--accent-rose)">
+        <div class="card-icon" style="background:rgba(251,113,133,.12)">🚫</div>
+        <h3>기존 방식 — 이미지 생성형</h3>
+        <p>"키워드 나열"로 정적 장면을 묘사. Kling 3.0에서는 밋밋한 결과.</p>
+        <div class="prompt-example" style="margin-top:1.2rem"><div class="prompt-body" style="font-size:.8rem;color:var(--accent-rose)">beautiful woman, coffee shop, warm lighting, bokeh, cinematic, 4k, masterpiece</div></div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent-green)">
+        <div class="card-icon" style="background:rgba(52,211,153,.12)">✅</div>
+        <h3>Kling 3.0 — 감독형 프롬프트</h3>
+        <p>카메라 움직임, 인물 동작, 감정, 환경 변화를 <strong>시간순</strong>으로 서술합니다.</p>
+        <div class="prompt-example" style="margin-top:1.2rem"><div class="prompt-body" style="font-size:.8rem;color:var(--accent-green)">Static tripod shot in a narrow café. A woman lifts her cup slowly, steam rising. Soft dolly push-in over 5 seconds. Golden hour light through foggy windows. 35mm film grain.</div></div>
+      </div>
+    </div>
+    <div class="tip-box info reveal" style="margin-top:2rem">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <h4>핵심: "어떻게 보이는가" → "어떻게 움직이는가"</h4>
+        <p>Kling 3.0은 시간, 공간, 물리 법칙을 이해합니다. 사진작가가 아니라 <strong>촬영 감독(DP)</strong>처럼 사고하세요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section id="reference">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">02 — Reference Images</span>
+      <h2>레퍼런스 이미지 200% 활용법</h2>
+      <p class="section-desc">레퍼런스 이미지는 일관성의 '닻(Anchor)'입니다.</p>
+    </div>
+    <div class="card reveal" style="margin-bottom:2rem">
+      <h3 style="font-size:1.4rem;margin-bottom:1.5rem">🔒 Elements 3.0 시스템</h3>
+      <div class="step-flow">
+        <div class="step-item"><div class="step-num">1</div><h4>Element 라이브러리에 캐릭터 등록</h4><p><strong>정면, 측면, 45도 각도</strong> 사진 2~4장 업로드. 다각도 제공이 핵심.</p></div>
+        <div class="step-item"><div class="step-num">2</div><h4>@ 태그로 프롬프트에서 참조</h4><p><code>@element1</code> 형태로 등록된 캐릭터를 참조합니다.</p></div>
+        <div class="step-item"><div class="step-num">3</div><h4>Scene Reference와 조합</h4><p>배경 이미지는 <code>@image1</code>으로 별도 업로드. <strong>스타일 일치</strong>가 핵심.</p></div>
+        <div class="step-item"><div class="step-num">4</div><h4>Subject Binding 활성화</h4><p>"Bind Subject" 활성화 → 얼굴, 의상이 영상 전체에 고정.</p></div>
+      </div>
+    </div>
+    <div class="grid-3 reveal">
+      <div class="card"><div class="card-icon" style="background:rgba(34,211,238,.12)">🖼️</div><h3>고해상도 & 중립 조명</h3><p>얼굴이 선명한 고해상도 사진. 강한 그림자와 복잡한 배경 회피.</p></div>
+      <div class="card"><div class="card-icon" style="background:rgba(249,115,22,.12)">📐</div><h3>비율 일관성</h3><p>전신 레퍼런스에 반신 이미지 사용 금지.</p></div>
+      <div class="card"><div class="card-icon" style="background:rgba(124,92,252,.12)">🎨</div><h3>스타일 융합</h3><p>레퍼런스와 프롬프트의 스타일을 반드시 일치시키세요.</p></div>
+    </div>
+    <div class="tip-box warning reveal" style="margin-top:2rem"><div class="tip-icon">⚡</div><div class="tip-content"><h4>I2V 황금 규칙: 이미 보이는 것은 설명하지 마세요</h4><p>입력 이미지를 앵커로 취급. <strong>"여기서 무엇이 변화하는가"</strong>만 서술합니다.</p></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section id="formula">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">03 — Prompt Formula</span>
+      <h2>프롬프트 황금 공식</h2>
+      <p class="section-desc">A/B 테스트로 검증된 5-레이어 구조.</p>
+    </div>
+    <div class="formula-block reveal">
+      <p style="color:var(--text-dim);font-size:.9rem;margin-bottom:1rem">검증된 5-레이어 프롬프트 구조</p>
+      <div class="formula-visual">
+        <span class="formula-chip" style="background:rgba(34,211,238,.15);color:var(--accent-cyan)">🎥 카메라</span>
+        <span class="formula-plus">+</span>
+        <span class="formula-chip" style="background:rgba(249,115,22,.15);color:var(--accent-hot)">🧑 주체·동작</span>
+        <span class="formula-plus">+</span>
+        <span class="formula-chip" style="background:rgba(52,211,153,.15);color:var(--accent-green)">🌍 환경·조명</span>
+        <span class="formula-plus">+</span>
+        <span class="formula-chip" style="background:rgba(251,113,133,.15);color:var(--accent-rose)">✨ 질감</span>
+        <span class="formula-plus">+</span>
+        <span class="formula-chip" style="background:rgba(167,139,250,.15);color:var(--accent-glow)">🔊 오디오</span>
+      </div>
+    </div>
+    <div class="prompt-example reveal">
+      <div class="prompt-header"><span style="font-weight:600;font-size:.9rem">공식 적용 예시</span><span class="prompt-tag" style="background:rgba(52,211,153,.15);color:var(--accent-green)">Complete</span></div>
+      <div class="prompt-body"><span class="kw-camera">Static tripod camera</span> in <span class="kw-env">a narrow neon-lit ramen shop, condensation fogs the window</span>, <span class="kw-subject">a couple sits side by side, eating noodles in slow synchronized rhythm</span>, <span class="kw-detail">broth splattering gently, faces softly illuminated by red neon glow, shot on 35mm film with shallow focus and glowing bokeh</span>.</div>
+      <div class="prompt-legend">
+        <span><span class="dot-legend" style="background:var(--accent-cyan)"></span> 카메라</span>
+        <span><span class="dot-legend" style="background:var(--accent-hot)"></span> 주체</span>
+        <span><span class="dot-legend" style="background:var(--accent-green)"></span> 환경</span>
+        <span><span class="dot-legend" style="background:var(--accent-rose)"></span> 질감</span>
+      </div>
+    </div>
+    <div class="card reveal" style="margin-top:2rem;border-left:3px solid var(--accent-hot)">
+      <h3>🎬 스타일 바이블 (Style Bible)</h3>
+      <p style="margin-bottom:1rem">모든 프롬프트 끝에 동일한 스타일 문구를 추가하여 일관성을 유지하세요.</p>
+      <div class="prompt-example"><div class="prompt-body" style="font-size:.82rem;color:var(--accent-hot)">cinematic lighting, 35mm film grain, moody color grade, shallow depth of field, high production value.</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section id="camera">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">04 — Camera Language</span>
+      <h2>카메라 워크 마스터하기</h2>
+      <p class="section-desc">Kling 3.0은 시네마틱 카메라 용어를 정확하게 이해합니다.</p>
+    </div>
+    <div class="reveal">
+      <table class="compare-table">
+        <thead><tr><th>카메라 용어</th><th>효과</th><th>사용 예시</th></tr></thead>
+        <tbody>
+          <tr><td><code>Slow dolly push-in</code></td><td>점진적 접근, 긴장감</td><td>인물 표정, 서스펜스</td></tr>
+          <tr><td><code>Static tripod shot</code></td><td>안정적 고정</td><td>대화, 제품 촬영</td></tr>
+          <tr><td><code>Handheld shoulder-cam</code></td><td>리얼리티, 긴박감</td><td>다큐멘터리, 액션</td></tr>
+          <tr><td><code>Tracking shot</code></td><td>인물 추적</td><td>걷기 장면</td></tr>
+          <tr><td><code>Crash zoom</code></td><td>극적 줌인</td><td>놀라운 순간</td></tr>
+          <tr><td><code>POV</code></td><td>1인칭 시점</td><td>몰입 경험</td></tr>
+          <tr><td><code>Aerial orbit</code></td><td>공중 회전</td><td>풍경, 드라마틱 등장</td></tr>
+          <tr><td><code>Macro close-up</code></td><td>극접사</td><td>음식, 제품, 눈동자</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section id="multishot">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">05 — Multi-Shot</span>
+      <h2>멀티샷으로 미니 무비 만들기</h2>
+      <p class="section-desc">최대 6개 샷, 15초의 스토리를 하나의 프롬프트로.</p>
+    </div>
+    <div class="grid-2 reveal">
+      <div class="card">
+        <h3>✅ 성공 법칙</h3>
+        <ul class="checklist">
+          <li><span class="check">✓</span> 4~6개 샷으로 10~15초 구성</li>
+          <li><span class="check">✓</span> Shot 1: 형태로 라벨 부여</li>
+          <li><span class="check">✓</span> 캐릭터를 첫 샷에서 확립</li>
+          <li><span class="check">✓</span> 타임코드 지정 (0-3초, 3-7초...)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>❌ 흔한 실수</h3>
+        <ul class="checklist">
+          <li><span class="check" style="color:var(--accent-rose)">✗</span> 10초에 6개+ 샷 → 급박</li>
+          <li><span class="check" style="color:var(--accent-rose)">✗</span> 한 문단에 모든 장면 압축</li>
+          <li><span class="check" style="color:var(--accent-rose)">✗</span> 샷마다 캐릭터 다르게 묘사</li>
+          <li><span class="check" style="color:var(--accent-rose)">✗</span> 총 시간 15초 초과</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section id="negative">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">06 — Negative & Style</span>
+      <h2>네거티브 프롬프트 & 필름 스타일</h2>
+    </div>
+    <div class="grid-2 reveal">
+      <div class="card" style="border-left:3px solid var(--accent-rose)">
+        <h3>🚫 필수 네거티브</h3>
+        <div class="prompt-example" style="margin-top:1rem"><div class="prompt-body" style="font-size:.8rem;color:var(--accent-rose)">smiling, cartoonish, 3D render, smooth plastic skin, floating limbs, sliding feet, text morphing, distorted hands, flickering textures, extra limbs</div></div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent-cyan)">
+        <h3>🎞️ 필름 스톡 키워드</h3>
+        <div class="prompt-example" style="margin-top:1rem"><div class="prompt-body" style="font-size:.8rem;color:var(--accent-cyan)">• VHS camcorder, heavy grain
+• 35mm film, shallow focus, bokeh
+• IMAX 70mm, ultra sharp
+• Anamorphic lens flare
+• Film noir, high contrast
+• Anime cel-shaded</div></div>
+      </div>
+    </div>
+    <div class="tip-box info reveal" style="margin-top:2rem"><div class="tip-icon">🎨</div><div class="tip-content"><h4>색상은 감정을 담아서</h4><p>"blue"가 아닌 <code>cool blue haze</code>, "warm"이 아닌 <code>amber nightclub strobe</code>로 표현하세요.</p></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section id="troubleshoot">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">07 — Troubleshooting</span>
+      <h2>흔한 문제 & 해결책</h2>
+    </div>
+    <div class="reveal">
+      <table class="compare-table">
+        <thead><tr><th>문제</th><th>원인</th><th>해결법</th></tr></thead>
+        <tbody>
+          <tr><td><strong>손 변형</strong></td><td>빈 공간 움직임</td><td class="good"><code>"fingers grip the cup"</code></td></tr>
+          <tr><td><strong>플라스틱 피부</strong></td><td>질감 부족</td><td class="good"><code>film grain, skin pores, sweat</code></td></tr>
+          <tr><td><strong>얼굴 변형</strong></td><td>저해상도 레퍼런스</td><td class="good">Element Binding + 다각도 사진</td></tr>
+          <tr><td><strong>배경 불안정</strong></td><td>환경 묘사 부족</td><td class="good">환경 키워드 매번 반복</td></tr>
+          <tr><td><strong>프레임 이탈</strong></td><td>느슨한 프레이밍</td><td class="good"><code>medium shot</code> 지정</td></tr>
+          <tr><td><strong>스타일 불일치</strong></td><td>스타일 키워드 누락</td><td class="good">Style Bible 매번 추가</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box warning reveal" style="margin-top:2rem"><div class="tip-icon">💎</div><div class="tip-content"><h4>프로 워크플로우</h4><p>저해상도에서 프롬프트를 다듬고, 최종본만 고해상도로 렌더링하여 크레딧 절약.</p></div></div>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:.5rem;color:var(--text-main)">Kling 3.0 프롬프트 마스터 가이드</p>
+  <p>AI 프롬프트 생성기: Google Gemini 2.5 Flash 무료 티어 사용</p>
+  <p style="margin-top:.5rem">2026년 4월 기준 최신 정보 반영</p>
+</footer>
+
+<script>
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('selected')));
+
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+const secs=document.querySelectorAll('section[id],header[id]');
+const tocs=document.querySelectorAll('.toc a');
+window.addEventListener('scroll',()=>{
+  let cur='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id});
+  tocs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+
+async function generatePrompt(){
+  const apiKey=document.getElementById('apiKey').value.trim();
+  const sceneDesc=document.getElementById('sceneDesc').value.trim();
+  const genMode=document.getElementById('genMode').value;
+  const duration=document.getElementById('duration').value;
+  const cameraStyle=document.getElementById('cameraStyle').value;
+  const mood=document.getElementById('mood').value;
+  const audioOption=document.getElementById('audioOption').value;
+  const extraNotes=document.getElementById('extraNotes').value.trim();
+  const includeNeg=document.getElementById('includeNeg').checked;
+  const selectedFilms=[...document.querySelectorAll('.chip.selected')].map(c=>c.dataset.value);
+
+  const errorEl=document.getElementById('errorMsg');
+  const resultArea=document.getElementById('resultArea');
+  errorEl.classList.remove('visible');
+  resultArea.classList.remove('visible');
+
+  if(!apiKey){showError('Gemini API 키를 입력해주세요. 우측 버튼으로 Google AI Studio에서 무료 발급 가능합니다.');return}
+  if(!sceneDesc){showError('장면 설명을 입력해주세요.');return}
+
+  const btn=document.getElementById('generateBtn');
+  btn.classList.add('loading');btn.disabled=true;
+
+  const modeMap={
+    'text-to-video':'Text-to-Video mode: Generate a completely new scene. Describe environment, characters, and actions in full detail.',
+    'image-to-video':'Image-to-Video mode: A reference image is the first frame. Start with "Use the uploaded image as the exact first frame." Do NOT re-describe what is already in the image. Only describe changes and motion FROM the image.',
+    'multi-shot':`Multi-Shot mode: Create a ${duration}-second sequence split into multiple shots. Label each "Shot 1:", "Shot 2:" etc. Each shot gets its own framing, subject, and action. Total time must not exceed ${duration} seconds.`
+  };
+
+  const cameraMap={
+    'auto':'Choose the most fitting camera movement for the scene.',
+    'static-tripod':'Static tripod shot','slow-dolly':'Slow dolly push-in',
+    'handheld':'Handheld shoulder-cam with micro-movement','tracking':'Tracking shot following the subject',
+    'aerial':'Aerial spiraling orbit','macro':'Extreme macro close-up, shallow depth of field',
+    'pov':'POV first-person perspective','low-angle':'Low-angle wide shot'
+  };
+
+  const moodMap={
+    'auto':'Choose the best mood based on the scene content.',
+    'cinematic':'cinematic, high production value','dramatic':'dramatic, tense, suspenseful',
+    'warm':'warm, cozy, soft golden lighting','dark':'dark, moody, deep shadows',
+    'energetic':'energetic, dynamic, vibrant','dreamy':'dreamy, ethereal, soft focus, pastel',
+    'retro':'VHS camcorder aesthetic, heavy grain, chromatic aberration',
+    'anime':'anime cel-shaded, vivid colors, Makoto Shinkai style'
+  };
+
+  const audioMap={
+    'none':'No audio instructions.',
+    'ambient':'Include ambient sounds only (rain, city noise, wind, etc.). No dialogue.',
+    'dialogue':'Include character dialogue using format: [Character A: Role, tone]: "Line". Keep lines short and intentional.',
+    'music':'Specify background music genre, tempo, and emotional tone.'
+  };
+
+  const systemPrompt=`You are an expert Kling 3.0 AI video prompt engineer. Transform the user's Korean scene description into a perfectly structured Kling 3.0 prompt in English.
+
+MANDATORY RULES:
+1. Follow this 5-layer order: [Camera Movement] + [Subject & Action] + [Environment/Lighting] + [Texture & Details] + [Audio/Emotion if applicable]
+2. Write like a film director — describe motion, time flow, cinematic intent. NOT static keyword lists.
+3. Write one continuous flowing scene description, not bullet points.
+4. Camera movement FIRST — always start with the camera instruction.
+5. Use specific motion verbs: dolly push, whip-pan, shoulder-cam drift, crash zoom, snap focus.
+6. Include physical textures: film grain, skin pores, fabric creases, condensation.
+7. Anchor hands to objects — never let hands move freely in empty space.
+8. Emotive color language: not "blue" but "cool blue haze", not "warm" but "amber glow".
+9. Keep under 300 words.
+10. Output ONLY the final English prompt. No explanations, no Korean, no markdown.
+
+MODE: ${modeMap[genMode]}
+CAMERA: ${cameraMap[cameraStyle]}
+MOOD: ${moodMap[mood]}
+FILM STYLE: ${selectedFilms.length?selectedFilms.join(', '):'Choose the best film style for the scene.'}
+AUDIO: ${audioMap[audioOption]}
+DURATION: ${duration} seconds.
+${includeNeg?`\nAfter the main prompt, add a blank line then "Negative prompt:" followed by: smooth plastic skin, floating limbs, sliding feet, text morphing, distorted hands, flickering textures, extra limbs. Add scene-specific negatives as needed.`:''}
+${extraNotes?`\nADDITIONAL NOTES: ${extraNotes}`:''}
+
+Output ONLY the ready-to-paste Kling 3.0 prompt in English.`;
+
+  try{
+    const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},
+      body:JSON.stringify({
+        contents:[{role:'user',parts:[{text:`다음 장면을 Kling 3.0 프롬프트로 변환해주세요:\n\n${sceneDesc}`}]}],
+        systemInstruction:{parts:[{text:systemPrompt}]},
+        generationConfig:{temperature:0.85,topP:0.95,topK:40,maxOutputTokens:2048}
+      })
+    });
+
+    if(!res.ok){
+      const err=await res.json().catch(()=>({}));
+      const msg=err?.error?.message||`HTTP ${res.status}`;
+      if(res.status===400)showError('API 키가 유효하지 않습니다. Google AI Studio에서 올바른 키를 확인하세요.');
+      else if(res.status===429)showError('요청 한도 초과! 무료 티어: 분당 10회, 하루 250회. 잠시 후 재시도하세요.');
+      else if(res.status===403)showError('API 키 권한 오류. AI Studio에서 Gemini API 활성화를 확인하세요.');
+      else showError('API 오류: '+msg);
+      return;
+    }
+
+    const data=await res.json();
+    const text=data?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').filter(Boolean).join('\n')?.trim();
+
+    if(!text){showError('응답이 비어있습니다. 장면 설명을 더 구체적으로 작성해보세요.');return}
+
+    document.getElementById('resultContent').textContent=text;
+    resultArea.classList.add('visible');
+    resultArea.scrollIntoView({behavior:'smooth',block:'center'});
+  }catch(e){
+    if(e.name==='TypeError')showError('네트워크 오류. 인터넷 연결을 확인해주세요.');
+    else showError('오류: '+e.message);
+  }finally{btn.classList.remove('loading');btn.disabled=false}
+}
+
+function showError(msg){const el=document.getElementById('errorMsg');el.textContent=msg;el.classList.add('visible');el.scrollIntoView({behavior:'smooth',block:'center'})}
+
+function copyResult(){
+  const text=document.getElementById('resultContent').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const b=document.querySelector('.copy-btn');b.textContent='✅ 복사됨!';b.style.borderColor='var(--accent-green)';b.style.color='var(--accent-green)';
+    setTimeout(()=>{b.textContent='📋 복사';b.style.borderColor='';b.style.color=''},2000);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    const b=document.querySelector('.copy-btn');b.textContent='✅ 복사됨!';setTimeout(()=>b.textContent='📋 복사',2000);
+  });
+}
+</script>
+</body>
+</html>
